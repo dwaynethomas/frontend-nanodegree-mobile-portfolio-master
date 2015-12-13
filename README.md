@@ -13,6 +13,12 @@ Run site
   ```bash
   $> open -a "Google Chrome" index.html
   ```
+Summary: Performance improvements (DT Optimizations)
+Images compressed with ImageMagick conversion script. (http://www.imagemagick.org/script/index.php)
+Profile Picture replaced with one of a more appropriate size via a screenshot utility.
+HTML minified with http://www.willpeavy.com/minifier/
+Css blocking improved with embedded css http://matthewjamestaylor.com/blog/adding-css-to-html-with-link-embed-inline-and-import
+
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
 
