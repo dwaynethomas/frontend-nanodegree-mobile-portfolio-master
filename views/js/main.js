@@ -537,11 +537,14 @@ window.addEventListener('scroll', updatePositions);
 var movingPizzas = document.getElementById('movingPizzas1');
 
 // Generates the sliding pizzas when the page loads.
+// DT optimization Declaring the elem variable (var elem;) 
+// outside the loop will prevent it from being created every time the loop is executed.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+  var elem = document.createElement('img');
+
   for (var i = 0; i < 200; i++) {
-    var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
