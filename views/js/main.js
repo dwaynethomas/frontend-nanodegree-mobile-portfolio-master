@@ -452,14 +452,15 @@ var resizePizzas = function(size) {
   // DT Optimization: using getElementsByClass() instead ofquerySelectorAll.
   // DT Optimization: calculation of  same size of pizza before the loop for only
   // the first randomPizzaContainer!... not all the pizzas
-   // DT Optimization: calculation of array length outside of the loop
-   // DT Optimization newwidth variable can go out the loop since the pizza sizes are all the same
-var width_container = document.getElementsByClassName("randomPizzaContainer").length
-var newwidth = (document.getElementsByClassName("randomPizzaContainer")[0].offsetWidth + dx) + 'px';
+  // DT Optimization: calculation of array length outside of the loop
+  // DT Optimization newwidth variable can go out the loop since the pizza sizes are all the same
+  // DT Optimization creates a local variable to save document.getElementsByClassName('randomPizzaContainer') outside the loop 
+  // so the DOM is not explicitly touched in every iteration!
   function changePizzaSizes(size) {
-    var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[0], size);
-    for (var i = 0; i < width_container ; i++) {
-      document.getElementsByClassName("randomPizzaContainer")[i].style.width = newwidth;
+    var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[0], size);   
+    var width_container = document.getElementsByClassName("randomPizzaContainer").length
+    var newwidth = (document.getElementsByClassName("randomPizzaContainer")[0].offsetWidth + dx) + 'px';  
+    var container =  document.getElementsByClassName('randomPizzaContainer');
     }
   }
 
