@@ -453,7 +453,7 @@ var resizePizzas = function(size) {
   // DT Optimization: calculation of  same size of pizza before the loop for only
   // the first randomPizzaContainer!... not all the pizzas
   function changePizzaSizes(size) {
-    var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[i], size);
+    var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[0], size);
     for (var i = 0; i < document.getElementsByClassName("randomPizzaContainer").length; i++) {
       var newwidth = (document.getElementsByClassName("randomPizzaContainer")[i].offsetWidth + dx) + 'px';
       document.getElementsByClassName("randomPizzaContainer")[i].style.width = newwidth;
