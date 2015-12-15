@@ -506,6 +506,7 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
+///** DT Optimization document.getElementsByClassName is faster than document.querySelectorAll. */
 
   var items = document.getElementsByClassName('.mover');
   
@@ -528,7 +529,7 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 
-///** Outside the loop */
+///** DT Optimization moves the variable outside the loop to prevent repeated declarations and assignments */
 var movingPizzas = document.getElementById('movingPizzas1');
 
 // Generates the sliding pizzas when the page loads.
