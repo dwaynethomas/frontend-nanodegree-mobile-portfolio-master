@@ -535,7 +535,7 @@ window.addEventListener('scroll', updatePositions);
 
 
 ///** DT Optimization moves the variable outside the loop to prevent repeated declarations and assignments */
-var movingPizzas = document.getElementById('movingPizzas1');
+var movingPizzas = document.getElementById('movingPizzas1').appendChild(elem);
 
 // Generates the sliding pizzas when the page loads.
 // DT optimization Declaring the elem variable (var elem;)
