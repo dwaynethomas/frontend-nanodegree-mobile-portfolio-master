@@ -399,7 +399,7 @@ var pizzaElementGenerator = function(i) {
 };
 
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
-function resizePizzas (size) {
+var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
   // Changes the value for the size of the pizza above the slider
@@ -418,15 +418,14 @@ function resizePizzas (size) {
         console.log("bug in changeSliderLabel");
     }
   }
-}
 
-resizePizzas(size);
+  changeSliderLabel(size);
 
-  // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
+   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   function determineDx (elem, size) {
-    var oldwidth = elem.offsetWidth;
-    var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
-    var oldsize = oldwidth / windowwidth;
+    var oldWidth = elem.offsetWidth;
+    var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
+    var oldSize = oldWidth / windowWidth;
 
     // TODO: change to 3 sizes? no more xl?
     // Changes the slider value to a percent width
@@ -443,27 +442,20 @@ resizePizzas(size);
       }
     }
 
-    var newsize = sizeSwitcher(size);
-    var dx = (newsize - oldsize) * windowwidth;
+    var newSize = sizeSwitcher(size);
+    var dx = (newSize - oldSize) * windowWidth;
 
     return dx;
   }
 
   // Iterates through pizza elements on the page and changes their widths
-  // DT Optimization: using getElementsByClass() instead ofquerySelectorAll.
-  // DT Optimization: calculation of  same size of pizza before the loop for only
-  // the first randomPizzaContainer!... not all the pizzas
-  // DT Optimization: calculation of array length outside of the loop
-  // DT Optimization newwidth variable can go out the loop since the pizza sizes are all the same
-  // DT Optimization creates a local variable to save document.getElementsByClassName('randomPizzaContainer') outside the loop
-  // so the DOM is not explicitly touched in every iteration!
   function changePizzaSizes(size) {
-    var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[0], size);
-    var width_container = document.getElementsByClassName("randomPizzaContainer").length
-    var newwidth = (document.getElementsByClassName("randomPizzaContainer")[0].offsetWidth + dx) + 'px';
-    var container =  document.getElementsByClassName('randomPizzaContainer');
+    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
+      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
+      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
+      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
     }
-
+  }
 
   changePizzaSizes(size);
 
@@ -472,15 +464,13 @@ resizePizzas(size);
   window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
   console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
-
+};
 
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-// DT optimization assignment of pizzas div will happen in every iteration, but it will be the same every time.
-// so div was removed from the for loop.
-var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
+  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -511,10 +501,8 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
-///** DT Optimization document.getElementsByClassName is faster than document.querySelectorAll. */
 
-  var items = document.getElementsByClassName('.mover');
-
+  var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
@@ -533,26 +521,19 @@ function updatePositions() {
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
-
-///** DT Optimization moves the variable outside the loop to prevent repeated declarations and assignments */
-var movingPizzas = document.getElementById('movingPizzas1').appendChild(elem);
-
 // Generates the sliding pizzas when the page loads.
-// DT optimization Declaring the elem variable (var elem;)
-// outside the loop will prevent it from being created every time the loop is executed.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  var elem = document.createElement('img');
-
   for (var i = 0; i < 200; i++) {
+    var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    document.querySelector("#movingPizzas1").appendChild(elem);
   }
-
   updatePositions();
 });
