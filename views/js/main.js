@@ -453,10 +453,12 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
   // DT Optimization, removing variable assignments new_width, pizza_length, and container from loop.
-    var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[0], size);
-    var newwidth = (document.querySelectorAll(".randomPizzaContainer")[0].offsetWidth + dx) + 'px';
-    var pizza_length = document.querySelectorAll(".randomPizzaContainer").length
-    var container =  document.getElementsByClassName('randomPizzaContainer');
+  // DT Optimization, accesses document once, instead of 4 times.
+
+    var container =  document.querySelectorAll('randomPizzaContainer');
+    var dx = determineDx(container[0], size);
+    var newwidth = (container[0].offsetWidth + dx) + 'px';
+    var pizza_length = container.length
       for (var i = 0; i < pizza_length; i++) {
         container[i].style.width = newwidth;
     }
@@ -474,8 +476,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+// DT Optimization, removes variable assignments pizzasDiv from loop.
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -508,8 +511,11 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var items = document.querySelectorAll('.mover');
+
+// DT optimization removed document assignment from loop on the scroll, makes tremendous difference.
+  var top = document.body.scrollTop;
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    var phase = Math.sin((top / 1250) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -530,13 +536,13 @@ window.addEventListener('scroll', updatePositions);
 // DT Optimization: reduced the number of background pizzas as a function of the screen height
 // DT Optimization: Removed the declaration of the variable elem from the loop.
 document.addEventListener('DOMContentLoaded', function() {
-  var iHeight = window.screen.height
-  var row = iHeight / 15;
+  var s = 256; // 256 is the height of a background-block//
+  var row = window.screen.height/s;
   var cols = 8;
-  var s = row * cols;
+  var requiredPizzaNum = row * cols;
   var elem;
   var movingPizzas = document.getElementById('movingPizzas1');
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < requiredPizzaNum; i++) {
     elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";

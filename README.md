@@ -28,6 +28,9 @@ Assignment of pizzas div will happen in every iteration, but it will be the same
 Reduced the number of background pizzas as a function of the screen height
 Removed the declaration of the variable elem from the loop.
 Removing variable assignments new_width, pizza_length, and container from loop.
+Removed document assignment from loop on the scroll, makes tremendous difference.
+Removed variable assignments pizzasDiv from loop.
+Placed document.getElementsByClassName('randomPizzaContainer') in a variable and then reused it instead of accessing document 4 times.
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
 
