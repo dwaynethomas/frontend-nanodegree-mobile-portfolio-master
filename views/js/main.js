@@ -455,7 +455,7 @@ var resizePizzas = function(size) {
   // DT Optimization, removing variable assignments new_width, pizza_length, and container from loop.
   // DT Optimization, accesses document once, instead of 4 times.
 
-    var container =  document.querySelectorAll('randomPizzaContainer');
+    var container =  document.getElementsByClassName('randomPizzaContainer');
     var dx = determineDx(container[0], size);
     var newwidth = (container[0].offsetWidth + dx) + 'px';
     var pizza_length = container.length
