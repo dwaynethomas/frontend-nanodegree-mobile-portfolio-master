@@ -452,11 +452,13 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-  // DT Optimization, removed variable assignments from loop.
+  // DT Optimization, removing variable assignments new_width, pizza_length, and container from loop.
     var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[0], size);
     var newwidth = (document.querySelectorAll(".randomPizzaContainer")[0].offsetWidth + dx) + 'px';
-      for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-        document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    var pizza_length = document.querySelectorAll(".randomPizzaContainer").length
+    var container =  document.getElementsByClassName('randomPizzaContainer');
+      for (var i = 0; i < pizza_length; i++) {
+        container[i].style.width = newwidth;
     }
   }
 
@@ -525,18 +527,24 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
+// DT Optimization: reduced the number of background pizzas as a function of the screen height
+// DT Optimization: Removed the declaration of the variable elem from the loop.
 document.addEventListener('DOMContentLoaded', function() {
+  var iHeight = window.screen.height
+  var row = iHeight / 15;
   var cols = 8;
-  var s = 256;
+  var s = row * cols;
+  var elem;
+  var movingPizzas = document.getElementById('movingPizzas1');
   for (var i = 0; i < 200; i++) {
-    var elem = document.createElement('img');
+    elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    movingPizzas.appendChild(elem);
   }
   updatePositions();
 });

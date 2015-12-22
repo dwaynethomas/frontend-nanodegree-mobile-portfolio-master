@@ -21,9 +21,13 @@ Improves Css blocking by placing noncritical css at the end of the html page to 
 https://developers.google.com/speed/docs/insights/PrioritizeVisibleContent
 Improves Css blocking  with embedded css for phones http://matthewjamestaylor.com/blog/adding-css-to-html-with-link-embed-inline-and-import
 
-Using getElementsByClass() instead ofquerySelectorAll.
+Main.js
+Using getElementsByClass() instead of querySelectorAll.
 Calculation of  same size of pizza before the loop for only the first randomPizzaContainer!... not all the pizzas
-DT optimization assignment of pizzas div will happen in every iteration, but it will be the same every time, so div was removed from the for loop.
+Assignment of pizzas div will happen in every iteration, but it will be the same every time, so div was removed from the for loop.
+Reduced the number of background pizzas as a function of the screen height
+Removed the declaration of the variable elem from the loop.
+Removing variable assignments new_width, pizza_length, and container from loop.
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
 
